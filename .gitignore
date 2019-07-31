@@ -1,0 +1,14 @@
+/.vscode/
+/build/
+/library/
+/local/
+/packages/
+/temp/
+
+*.lnk
+desktop.ini
+Thumbs.db
+ehthumbs.db
+.DS_Store
+*.log
+/creator.d.ts
