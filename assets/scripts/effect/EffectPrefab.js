@@ -17,7 +17,11 @@ cc.Class({
         return;
     },
     
-    onPlay: function (play_flg) {
+    onPlay: function () {
+        return;
+    },
+
+    onStop: function () {
         return;
     },
     
@@ -40,8 +44,14 @@ cc.Class({
         return (0);
     },
 
-    play: function (play_flg) {
-        this.onPlay(play_flg);
+    play: function () {
+        this.onPlay();
+
+        return;
+    },
+
+    stop: function () {
+        this.onStop();
 
         return;
     },

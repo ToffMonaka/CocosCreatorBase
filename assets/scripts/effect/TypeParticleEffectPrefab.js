@@ -37,7 +37,8 @@ cc.Class({
         this.onUpdate(time);
 
         if (!this.deleteFlag) {
-            if ((this.autoDeleteFlag & !this.particleSystem.active) && (this.particleSystem.particleCount <= 0)) {
+            if ((this.autoDeleteFlag)
+            && (!this.particleSystem.active && (this.particleSystem.particleCount <= 0))) {
                 this.deleteFlag = true;
             }
         } else {
@@ -47,16 +48,22 @@ cc.Class({
         return;
     },
 
-    play: function (play_flg) {
-        this.node.active = play_flg;
+    play: function () {
+        this.node.active = true;
 
-        if (play_flg) {
-            this.particleSystem.resetSystem();
-        } else {
-            this.particleSystem.stopSystem();
-        }
+        this.particleSystem.resetSystem();
 
-        this._super(play_flg);
+        this._super();
+
+        return;
+    },
+
+    stop: function () {
+        this.node.active = false;
+
+        this.particleSystem.stopSystem();
+
+        this._super();
 
         return;
     }

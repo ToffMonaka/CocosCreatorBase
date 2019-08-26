@@ -42,7 +42,8 @@ cc.Class({
         this.onUpdate(time);
 
         if (!this.deleteFlag) {
-            if (this.autoDeleteFlag & !this.action.isRun()) {
+            if ((this.autoDeleteFlag)
+            && (!this.action.isRun())) {
                 this.deleteFlag = true;
             }
         } else {
@@ -52,14 +53,20 @@ cc.Class({
         return;
     },
 
-    play: function (play_flg) {
-        this.node.active = play_flg;
+    play: function () {
+        this.node.active = true;
 
-        if (!play_flg) {
-            this.action.run(this.node, null, this.actionTag);
-        }
+        this._super();
 
-        this._super(play_flg);
+        return;
+    },
+
+    stop: function () {
+        this.node.active = false;
+
+        this.action.run(this.node, null, this.actionTag);
+
+        this._super();
 
         return;
     }

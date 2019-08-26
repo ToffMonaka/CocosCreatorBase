@@ -40,7 +40,8 @@ cc.Class({
         this.onUpdate(time);
 
         if (!this.deleteFlag) {
-            if (this.autoDeleteFlag & !this.animationState.isPlaying) {
+            if ((this.autoDeleteFlag)
+            && (!this.animationState.isPlaying)) {
                 this.deleteFlag = true;
             }
         } else {
@@ -50,17 +51,23 @@ cc.Class({
         return;
     },
 
-    play: function (play_flg) {
-        this.node.active = play_flg;
+    play: function () {
+        this.node.active = true;
 
-        if (play_flg) {
-            this.animation.play();
-        } else {
-            this.animation.setCurrentTime(0);
-            this.animation.stop();
-        }
+        this.animation.play();
 
-        this._super(play_flg);
+        this._super();
+
+        return;
+    },
+
+    stop: function () {
+        this.node.active = false;
+
+        this.animation.setCurrentTime(0);
+        this.animation.stop();
+
+        this._super();
 
         return;
     }

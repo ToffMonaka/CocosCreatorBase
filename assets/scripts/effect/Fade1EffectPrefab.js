@@ -26,36 +26,34 @@ cc.Class({
         return;
     },
     
-    onPlay: function (play_flg) {
-        if (play_flg) {
-            let opacity = 0;
-            let act = null;
-            let act_ary = [];
+    onPlay: function () {
+        let opacity = 0;
+        let act = null;
+        let act_ary = [];
 
-            if (this.inTime > 0.0) {
-                opacity = 255;
-                act_ary.unshift(cc.fadeTo(this.inTime, 0));
-            }
-
-            if (this.waitTime > 0.0) {
-                opacity = 255;
-                act_ary.unshift(cc.delayTime(this.waitTime));
-            }
-            
-            if (this.outTime > 0.0) {
-                opacity = 0;
-                act_ary.unshift(cc.fadeTo(this.outTime, 255));
-            }
-
-            if (act_ary.length > 1) {
-                act = cc.sequence(act_ary);
-            } else if (act_ary.length == 1) {
-                act = act_ary[0];
-            }
-            
-            this.node.opacity = opacity;
-            this.action.run(this.node, act, this.actionTag);
+        if (this.inTime > 0.0) {
+            opacity = 255;
+            act_ary.unshift(cc.fadeTo(this.inTime, 0));
         }
+
+        if (this.waitTime > 0.0) {
+            opacity = 255;
+            act_ary.unshift(cc.delayTime(this.waitTime));
+        }
+        
+        if (this.outTime > 0.0) {
+            opacity = 0;
+            act_ary.unshift(cc.fadeTo(this.outTime, 255));
+        }
+
+        if (act_ary.length > 1) {
+            act = cc.sequence(act_ary);
+        } else if (act_ary.length == 1) {
+            act = act_ary[0];
+        }
+        
+        this.node.opacity = opacity;
+        this.action.run(this.node, act, this.actionTag);
 
         return;
     }
