@@ -58,7 +58,7 @@ cc.Class({
     },
     
     update: function (time) {
-        if (!this.isUpdatable()) {
+        if (!this.canUpdate()) {
             return;
         }
 
@@ -67,13 +67,19 @@ cc.Class({
         return;
     },
 
-    isUpdatable: function () {
+    canUpdate: function () {
         return (this.canvas != null);
     },
 
     isControl: function () {
         if (this.layer != null) {
             if (!this.layer.isControl()) {
+                return (false);
+            }
+        }
+
+        if (this.layerScrollViewEx != null) {
+            if (!this.layerScrollViewEx.isControl()) {
                 return (false);
             }
         }

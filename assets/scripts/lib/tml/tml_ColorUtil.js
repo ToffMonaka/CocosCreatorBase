@@ -215,7 +215,7 @@ function getHSVColor(h, s, v) {
 
             r = Math.round(r);
             g = Math.round(g);
-            b = Math.round(b);            
+            b = Math.round(b);
         
             return (getRGBColor(r, g, b));
         }

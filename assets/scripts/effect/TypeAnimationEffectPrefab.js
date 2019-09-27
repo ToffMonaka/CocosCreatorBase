@@ -33,7 +33,7 @@ cc.Class({
     },
 
     update: function (time) {
-        if (!this.isUpdatable()) {
+        if (!this.canUpdate()) {
             return;
         }
 

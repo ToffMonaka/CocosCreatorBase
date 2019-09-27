@@ -16,6 +16,7 @@ cc.Class({
         openCompleteCallbackOnceFlag: {default: false, visible: false},
         openAutoFlag: {default: true, visible: false},
         focusFlag: {default: false, visible: false},
+        focusOpenFlag: {default: false, visible: false},
         layerController: {default: null, visible: false}
     },
 
@@ -45,19 +46,11 @@ cc.Class({
         return;
     },
 
-    onUpdateOpen: function () {
-        return;
-    },
-
     onCompleteOpen: function () {
         return;
     },
     
     onFocus: function () {
-        return;
-    },
-    
-    onUpdateFocus: function () {
         return;
     },
 
@@ -95,46 +88,75 @@ cc.Class({
     },
     
     update: function (time) {
-        if (!this.isUpdatable()) {
+        if (!this.canUpdate()) {
             return;
         }
 
+        if ((this.openFlag & !this.openCompleteFlag)
+        && (!this.openAction.isRun())) {
+            this.completeOpen();
+        }
+
+        if ((!this.openFlag)
+        && (!this.openAction.isRun())) {
+            this.completeOpen();
+        }
+
         this.updateOpen();
+        
         this.updateFocus();
+
+        this.onUpdate(time);
+
+        if (!this.openFlag & !this.openCompleteFlag) {
+            this.setActiveFlag(false);
+        }
 
         for (let layer_i = 0; layer_i < this.layerController.layerArray.length; ++layer_i) {
             let layer = this.layerController.layerArray[layer_i];
 
-            if (layer.openAutoFlag) {
-                if (this.focusFlag != layer.openFlag) {
-                    layer.open(this.focusFlag);
-                }
+            if (!layer.openAutoFlag) {
+                continue;
+            }
 
-                if (!layer.isOpenable(layer.openFlag)) {
-                    layer.open(!layer.openFlag);
+            if (layer.openFlag) {
+                if (this.focusFlag) {
+                    if (!layer.canOpen(true)) {
+                        layer.open(false);
+                    }
+                } else {
+                    layer.open(false);
+                }
+            } else {
+                if (this.focusFlag) {
+                    layer.open(true);
                 }
             }
         }
 
-        this.onUpdate(time);
-
         return;
     },
 
-    isUpdatable: function () {
+    canUpdate: function () {
         return (this.canvas != null);
     },
     
     open: function (open_flg) {
-        if (!this.isOpenable(open_flg)) {
+        if (!this.canOpen(open_flg)) {
             return;
         }
 
-        this.openFlag = open_flg;
-        
+        this.openNoCan(open_flg);
+
+        return;
+    },
+
+    openNoCan: function (open_flg) {
         if (open_flg) {
             this.setActiveFlag(true);
         }
+
+        this.openFlag = open_flg;
 
         this.onOpen();
 
@@ -143,42 +165,16 @@ cc.Class({
         return;
     },
 
-    isOpenable: function (open_flg) {
+    canOpen: function (open_flg) {
         return (true);
     },
 
     updateOpen: function () {
-        if (this.openFlag & !this.openAction.isRun() & !this.openCompleteFlag) {
-            this.completeOpen(true);
-        }
-
-        if (!this.openFlag & !this.openAction.isRun()) {
-            this.completeOpen(false);
-
-            if (!this.openFlag) {
-                this.setActiveFlag(false);
-            }
-        }
-
-        this.onUpdateOpen();
-
         return;
     },
 
-    setOpenParameter: function (param) {
-        if (param.openType !== undefined) {
-            this.openType = param.openType;
-        }
-
-        if (param.openContinueFlag !== undefined) {
-            this.openContinueFlag = param.openContinueFlag;
-        }
-        
-        return;
-    },
-
-    completeOpen: function (open_flg) {
-        this.openCompleteFlag = open_flg;
+    completeOpen: function () {
+        this.openCompleteFlag = this.openFlag;
         
         this.onCompleteOpen();
 
@@ -200,11 +196,29 @@ cc.Class({
         return;
     },
 
+    setOpenParameter: function (param) {
+        if (param.openType !== undefined) {
+            this.openType = param.openType;
+        }
+
+        if (param.openContinueFlag !== undefined) {
+            this.openContinueFlag = param.openContinueFlag;
+        }
+        
+        return;
+    },
+
     focus: function (focus_flg) {
-        if (!this.isFocusable(focus_flg)) {
+        if (!this.canFocus(focus_flg)) {
             return;
         }
 
+        this.focusNoCan(focus_flg);
+
+        return;
+    },
+
+    focusNoCan: function (focus_flg) {
         this.focusFlag = focus_flg;
 
         this.onFocus();
@@ -212,155 +226,127 @@ cc.Class({
         return;
     },
 
-    focusByBase: function () {
-        if (this.focusFlag) {
-            if (this.layer != null) {
-                if (!this.layer.focusFlag) {
-                    this.focus(false);
-                }
-            } else {
-            }
-        } else if (this.openCompleteFlag) {
-            if (this.layer != null) {
-                if (this.layer.focusFlag) {
-                    this.focus(true);
-                }
-            } else {
-                this.focus(true);
-            }
-        }
-
-        return;
+    canFocus: function (focus_flg) {
+        return (true);
     },
 
-    focusByYes: function (yes_flg) {
-        if (this.focusFlag) {
-            if (this.layer != null) {
-                if ((!this.layer.focusFlag)
-                || (!yes_flg)) {
-                    this.focus(false);
-                }
-            } else {
-                if (!yes_flg) {
-                    this.focus(false);
-                }
-            }
-        } else if (this.openCompleteFlag) {
-            if (this.layer != null) {
-                if ((this.layer.focusFlag)
-                && (yes_flg)) {
-                    this.focus(true);
-                }
-            } else {
-                if (yes_flg) {
-                    this.focus(true);
-                }
-            }
+    canFocusByAllow: function (focus_flg, allow_flg) {
+        if (focus_flg) {
+            if (!allow_flg) {
+                return (false);
+            }            
+        } else {
+            if (allow_flg) {
+                return (false);
+            }            
         }
 
-        return;
-    },
-    
-    focusByNo: function (no_flg) {
-        if (this.focusFlag) {
-            if (this.layer != null) {
-                if ((!this.layer.focusFlag)
-                || (no_flg)) {
-                    this.focus(false);
-                }
-            } else {
-                if (no_flg) {
-                    this.focus(false);
-                }
-            }
-        } else if (this.openCompleteFlag) {
-            if (this.layer != null) {
-                if ((this.layer.focusFlag)
-                && (!no_flg)) {
-                    this.focus(true);
-                }
-            } else {
-                if (!no_flg) {
-                    this.focus(true);
-                }
-            }
-        }
-
-        return;
-    },
-    
-    focusByYesNo: function (yes_flg, no_flg) {
-        if (this.focusFlag) {
-            if (this.layer != null) {
-                if ((!this.layer.focusFlag)
-                || (!yes_flg || no_flg)) {
-                    this.focus(false);
-                }
-            } else {
-                if (!yes_flg || no_flg) {
-                    this.focus(false);
-                }
-            }
-        } else if (this.openCompleteFlag) {
-            if (this.layer != null) {
-                if ((this.layer.focusFlag)
-                && (yes_flg && !no_flg)) {
-                    this.focus(true);
-                }
-            } else {
-                if (yes_flg && !no_flg) {
-                    this.focus(true);
-                }
-            }
-        }
-
-        return;
-    },
-
-    isFocusable: function (focus_flg) {
         return (true);
     },
     
+    canFocusByDeny: function (focus_flg, deny_flg) {
+        if (focus_flg) {
+            if (deny_flg) {
+                return (false);
+            }            
+        } else {
+            if (!deny_flg) {
+                return (false);
+            }            
+        }
+
+        return (true);
+    },
+    
+    canFocusByAllowDeny: function (focus_flg, allow_flg, deny_flg) {
+        if (focus_flg) {
+            if (!allow_flg | deny_flg) {
+                return (false);
+            }            
+        } else {
+            if (allow_flg & !deny_flg) {
+                return (false);
+            }            
+        }
+
+        return (true);
+    },
+
     updateFocus: function () {
-        this.onUpdateFocus();
+        if (this.layer != null) {
+            this.layer.updateFocus();
+        }
+
+        if ((this.openFlag & this.openCompleteFlag)
+        && (this.canOpen(true))) {
+            this.focusOpenFlag = true;
+        } else {
+            this.focusOpenFlag = false;
+        }
+
+        if (this.focusFlag) {
+            if (this.focusOpenFlag) {
+                if (this.layer != null) {
+                    if (this.layer.focusOpenFlag) {
+                        if (this.layer.focusFlag) {
+                            if (!this.canFocus(true)) {
+                                this.focus(false);
+                            }
+                        } else {
+                            this.focus(false);
+                        }
+                    } else {
+                        this.focusNoCan(false);
+                    }
+                } else {
+                    if (!this.canFocus(true)) {
+                        this.focus(false);
+                    }
+                }
+            } else {
+                this.focusNoCan(false);
+            }
+        } else {
+            if (this.focusOpenFlag) {
+                if (this.layer != null) {
+                    if (this.layer.focusOpenFlag) {
+                        if (this.layer.focusFlag) {
+                            this.focus(true);
+                        }
+                    }
+                } else {
+                    this.focus(true);
+                }
+            }
+        }
 
         return;
     },
 
     isControl: function () {
-        if (this.layer != null) {
-            if (!this.layer.isControl()) {
-                return (false);
-            }
-        }
-
         this.updateFocus();
 
-        return (this.openFlag & !this.openAction.isRun() & this.focusFlag);
+        return (this.focusFlag);
     },
 
     setActiveFlag: function (active_flg) {
         this.node.active = active_flg;
-        this.openFlag = active_flg;
+        this.openFlag = false;
         this.openCompleteFlag = false;
         this.focusFlag = false;
-        this.hideLayerController(this.layerController);
-    
+        this.focusOpenFlag = false;
+
+        for (let layer_i = 0; layer_i < this.layerController.layerArray.length; ++layer_i) {
+            let layer = this.layerController.layerArray[layer_i];
+
+            layer.setActiveFlag(false);
+        }
+        
         return;
     },
     
     setLayerController: function (layer_ary) {
         this.layerController = new LayerController(layer_ary);
-
-        return;
-    },
-
-    hideLayerController: function (layer_ctrl) {
-        for (let layer_i = 0; layer_i < layer_ctrl.layerArray.length; ++layer_i) {
-            let layer = layer_ctrl.layerArray[layer_i];
-
-            layer.setActiveFlag(false);
-        }
 
         return;
     }

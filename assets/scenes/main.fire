@@ -78,10 +78,10 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 54
+        "__id__": 55
       },
       {
-        "__id__": 55
+        "__id__": 56
       }
     ],
     "_prefab": null,
@@ -1099,6 +1099,7 @@
     "openCompleteCallbackOnceFlag": false,
     "openAutoFlag": true,
     "focusFlag": false,
+    "focusOpenFlag": false,
     "layerController": null,
     "bottomLayoutNode": {
       "__id__": 20
@@ -1315,6 +1316,7 @@
     "openCompleteCallbackOnceFlag": false,
     "openAutoFlag": true,
     "focusFlag": false,
+    "focusOpenFlag": false,
     "layerController": null,
     "messageArray": [],
     "messageLimit": 0,
@@ -1527,6 +1529,7 @@
     "openCompleteCallbackOnceFlag": false,
     "openAutoFlag": true,
     "focusFlag": false,
+    "focusOpenFlag": false,
     "layerController": null,
     "infoLabel": {
       "__id__": 39
@@ -1575,6 +1578,7 @@
     "openCompleteCallbackOnceFlag": false,
     "openAutoFlag": true,
     "focusFlag": false,
+    "focusOpenFlag": false,
     "layerController": null,
     "terminalLayerNode": {
       "__id__": 36
@@ -1602,10 +1606,10 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 52
+        "__id__": 53
       },
       {
-        "__id__": 53
+        "__id__": 54
       }
     ],
     "_prefab": null,
@@ -1657,14 +1661,14 @@
         "__id__": 46
       },
       {
-        "__id__": 49
+        "__id__": 50
       }
     ],
     "_tag": -1,
     "_active": false,
     "_components": [
       {
-        "__id__": 51
+        "__id__": 52
       }
     ],
     "_prefab": null,
@@ -1720,6 +1724,9 @@
       },
       {
         "__id__": 48
+      },
+      {
+        "__id__": 49
       }
     ],
     "_prefab": null,
@@ -1812,6 +1819,58 @@
     "_atlas": null
   },
   {
+    "__type__": "cc.Button",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 46
+    },
+    "_enabled": true,
+    "transition": 0,
+    "pressedColor": {
+      "__type__": "cc.Color",
+      "r": 211,
+      "g": 211,
+      "b": 211,
+      "a": 255
+    },
+    "hoverColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "duration": 0.1,
+    "zoomScale": 1.2,
+    "clickEvents": [],
+    "_N$interactable": true,
+    "_N$enableAutoGrayEffect": false,
+    "_N$normalColor": {
+      "__type__": "cc.Color",
+      "r": 214,
+      "g": 214,
+      "b": 214,
+      "a": 255
+    },
+    "_N$disabledColor": {
+      "__type__": "cc.Color",
+      "r": 124,
+      "g": 124,
+      "b": 124,
+      "a": 255
+    },
+    "_N$normalSprite": null,
+    "_N$pressedSprite": null,
+    "pressedSprite": null,
+    "_N$hoverSprite": null,
+    "hoverSprite": null,
+    "_N$disabledSprite": null,
+    "_N$target": {
+      "__id__": 46
+    }
+  },
+  {
     "__type__": "cc.Node",
     "_name": "label1",
     "_objFlags": 0,
@@ -1823,7 +1882,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 50
+        "__id__": 51
       }
     ],
     "_prefab": null,
@@ -1868,7 +1927,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 49
+      "__id__": 50
     },
     "_enabled": true,
     "_useOriginalSize": false,
@@ -1951,7 +2010,7 @@
       "__id__": 45
     },
     "waitLabel": {
-      "__id__": 50
+      "__id__": 51
     }
   },
   {

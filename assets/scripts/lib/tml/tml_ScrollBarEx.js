@@ -3,11 +3,7 @@ var NodeUtil = require('tml_NodeUtil');
 function ScrollBarEx (scroll_view, scroll_bar, handle_min_size) {
     this.scrollView = scroll_view;
     this.scrollBar = scroll_bar;
-
-    if (this.scrollBar != null) {
-        this.scrollBar.enabled = true;
-    }
-
+    this.scrollBar.enabled = true;
     this.focusFlag = true;
     this.handleMinSize = handle_min_size;
 
@@ -15,10 +11,6 @@ function ScrollBarEx (scroll_view, scroll_bar, handle_min_size) {
 };
 
 ScrollBarEx.prototype.update = function () {
-    if (this.scrollBar == null) {
-        return;
-    }
-
     switch (this.scrollBar.direction) {
     case cc.Scrollbar.Direction.HORIZONTAL: {
         let content = this.scrollView.content;
@@ -80,10 +72,6 @@ ScrollBarEx.prototype.update = function () {
 };
 
 ScrollBarEx.prototype.focus = function (focus_flg) {
-    if (this.scrollBar == null) {
-        return;
-    }
-
     this.focusFlag = focus_flg;
 
     this.scrollBar.enabled = this.focusFlag;
@@ -104,20 +92,12 @@ ScrollBarEx.prototype.setEvent = function (node) {
 };
 
 ScrollBarEx.prototype.setStartEvent = function (node) {
-    if (this.scrollBar == null) {
-        return;
-    }
-    
     NodeUtil.setEvent(node, cc.Node.EventType.TOUCH_START, this.onStartEvent, this);
 
     return;
 };
 
 ScrollBarEx.prototype.setMoveEvent = function (node) {
-    if (this.scrollBar == null) {
-        return;
-    }
-    
     NodeUtil.setEvent(node, cc.Node.EventType.TOUCH_MOVE, this.onMoveEvent, this);
     
     return;

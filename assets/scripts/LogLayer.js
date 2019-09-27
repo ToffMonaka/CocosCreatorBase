@@ -69,10 +69,6 @@ cc.Class({
         return;
     },
 
-    onUpdateOpen: function () {
-        return;
-    },
-
     onCompleteOpen: function () {
         return;
     },
@@ -80,14 +76,8 @@ cc.Class({
     onFocus: function () {
         return;
     },
-    
-    onUpdateFocus: function () {
-        this.focusByBase();
-        
-        return;
-    },
 
-    isOpenable: function (open_flg) {
+    canOpen: function (open_flg) {
         if (open_flg) {
             if (!ConstantUtil.APPLICATION.DEBUG_FLAG) {
                 return (false);
@@ -103,7 +93,7 @@ cc.Class({
         return;
     },
 
-    isFocusable: function (focus_flg) {
+    canFocus: function (focus_flg) {
         return (true);
     },
 

@@ -1,33 +1,21 @@
 var NodeUtil = require('tml_NodeUtil');
 
-function ScrollViewEx (scroll_view, threshold) {
+function ScrollViewEx (scroll_view, threshold_size) {
     this.scrollView = scroll_view;
-
-    if (this.scrollView != null) {
-        this.scrollView.enabled = true;
-    }
-    
+    this.scrollView.enabled = true;
     this.focusFlag = true;
-    this.controlFlag = false;
-    this.threshold = threshold;
+    this.thresholdFlag = false;
     this.thresholdPosition = cc.Vec2.ZERO;
+    this.thresholdSize = threshold_size;
 
     return;
 };
 
 ScrollViewEx.prototype.update = function () {
-    if (this.scrollView == null) {
-        return;
-    }
-
     return;
 };
 
 ScrollViewEx.prototype.focus = function (focus_flg) {
-    if (this.scrollView == null) {
-        return;
-    }
-    
     this.focusFlag = focus_flg;
 
     this.scrollView.enabled = this.focusFlag;
@@ -37,14 +25,10 @@ ScrollViewEx.prototype.focus = function (focus_flg) {
 };
 
 ScrollViewEx.prototype.isControl = function () {
-    return (this.controlFlag);
+    return (this.thresholdFlag);
 };
 
 ScrollViewEx.prototype.readyScroll = function () {
-    if (this.scrollView == null) {
-        return;
-    }
-    
     this.scrollView.enabled = this.focusFlag;
     this.scrollView.stopAutoScroll();
     
@@ -64,20 +48,12 @@ ScrollViewEx.prototype.setEvent = function (node) {
 };
 
 ScrollViewEx.prototype.setStartEvent = function (node) {
-    if (this.scrollView == null) {
-        return;
-    }
-    
     NodeUtil.setEvent(node, cc.Node.EventType.TOUCH_START, this.onStartEvent, this);
 
     return;
 };
 
 ScrollViewEx.prototype.setMoveEvent = function (node) {
-    if (this.scrollView == null) {
-        return;
-    }
-    
     NodeUtil.setEvent(node, cc.Node.EventType.TOUCH_MOVE, this.onMoveEvent, this);
     
     return;
@@ -92,7 +68,7 @@ ScrollViewEx.prototype.onStartEvent = function (event) {
 
     this.thresholdPosition = event_pos;
 
-    this.controlFlag = true;
+    this.thresholdFlag = true;
     this.scrollView.enabled = false;
 
     return;
@@ -103,12 +79,12 @@ ScrollViewEx.prototype.onMoveEvent = function (event) {
         return;
     }
 
-    if (this.controlFlag) {
+    if (this.thresholdFlag) {
         let event_pos = event.target.convertToNodeSpace(event.getLocation());
         let disp_pos = event_pos.sub(this.thresholdPosition);
         
-        if ((cc.pLength(disp_pos) * this.scrollView.content.scale) >= this.threshold) {
-            this.controlFlag = false;
+        if ((cc.pLength(disp_pos) * this.scrollView.content.scale) >= this.thresholdSize) {
+            this.thresholdFlag = false;
             this.scrollView.enabled = true;
         }
     }
