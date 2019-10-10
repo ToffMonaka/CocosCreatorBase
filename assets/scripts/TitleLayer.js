@@ -121,6 +121,8 @@ cc.Class({
         this.setCompanyName();
         this.setversionName();
 
+        this.canvas.sound.playBGM(ConstantUtil.CANVAS_SOUND.BGM_FILE_PATH_ID.TITLE_BGM1, 1.0, false);
+
         return;
     },
 

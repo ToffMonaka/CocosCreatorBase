@@ -10,13 +10,6 @@ cc.Class({
         autoDeleteFlag: {default: false, visible: false}
     },
 
-    onReady: function () {
-        {// set event
-        }
-
-        return;
-    },
-    
     onPlay: function () {
         return;
     },

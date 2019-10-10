@@ -72,7 +72,8 @@ Object.freeze(CANVAS_GRAPHIC);
 
 var CANVAS_SOUND = {
     BGM_FILE_PATH_ID: cc.Enum({
-        NONE: 0
+        NONE: 0,
+        TITLE_BGM1: 1
     }),
     BGM_FADE_TYPE: cc.Enum({
         NONE: 0,
@@ -80,7 +81,8 @@ var CANVAS_SOUND = {
     }),
     BGM_FADE_TIME: 1.5,
     SE_FILE_PATH_ID: cc.Enum({
-        NONE: 0
+        NONE: 0,
+        NOTICE_SE1: 1
     })
 };
 Object.freeze(CANVAS_SOUND);
@@ -137,7 +139,8 @@ Object.freeze(TITLE_LAYER);
 var EFFECT = {
     MASTER_ID: cc.Enum({
         NONE: 0,
-        FADE1: 1
+        FADE1: 1,
+        NOTICE1: 2
     }),
     TYPE: cc.Enum({
         NONE: 0,
@@ -155,7 +158,10 @@ var EFFECT_MASTER_DATA = {
         },
         {
             ID: EFFECT.MASTER_ID.FADE1, TYPE: EFFECT.TYPE.ACTION
-        }
+        },
+        {
+            ID: EFFECT.MASTER_ID.NOTICE1, TYPE: EFFECT.TYPE.ACTION
+        },
     ],
     get: function (mst_id) {
         return (this.ARRAY[mst_id]);

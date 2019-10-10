@@ -187,6 +187,19 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">release/notice1_bg_img1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>17,17,33,33</rect>
+                <key>scale9Paddings</key>
+                <rect>17,17,33,33</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">release/title_logo_img1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

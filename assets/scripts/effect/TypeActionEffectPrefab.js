@@ -27,7 +27,9 @@ cc.Class({
     },
 
     delete: function () {
-        this.action.run(this.node, null, this.actionTag);
+        if (this.action.node == this.node) {
+            this.action.run(null, null, 0);
+        }
 
         this._super();
 
@@ -41,10 +43,14 @@ cc.Class({
 
         this.onUpdate(time);
 
-        if (!this.deleteFlag) {
-            if ((this.autoDeleteFlag)
-            && (!this.action.isRun())) {
-                this.deleteFlag = true;
+        if (this.action.node == this.node) {
+            if (!this.deleteFlag) {
+                if ((this.autoDeleteFlag)
+                && (!this.action.isRun())) {
+                    this.deleteFlag = true;
+                }
+            } else {
+                this.delete();
             }
         } else {
             this.delete();
@@ -64,7 +70,9 @@ cc.Class({
     stop: function () {
         this.node.active = false;
 
-        this.action.run(this.node, null, this.actionTag);
+        if (this.action.node == this.node) {
+            this.action.run(null, null, 0);
+        }
 
         this._super();
 

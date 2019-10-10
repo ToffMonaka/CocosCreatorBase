@@ -234,11 +234,11 @@ cc.Class({
         if (focus_flg) {
             if (!allow_flg) {
                 return (false);
-            }            
+            }
         } else {
             if (allow_flg) {
                 return (false);
-            }            
+            }
         }
 
         return (true);
@@ -248,11 +248,11 @@ cc.Class({
         if (focus_flg) {
             if (deny_flg) {
                 return (false);
-            }            
+            }
         } else {
             if (!deny_flg) {
                 return (false);
-            }            
+            }
         }
 
         return (true);
@@ -262,11 +262,11 @@ cc.Class({
         if (focus_flg) {
             if (!allow_flg | deny_flg) {
                 return (false);
-            }            
+            }
         } else {
             if (allow_flg & !deny_flg) {
                 return (false);
-            }            
+            }
         }
 
         return (true);
