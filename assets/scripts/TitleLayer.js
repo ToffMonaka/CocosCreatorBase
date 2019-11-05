@@ -13,7 +13,6 @@ cc.Class({
 
     onReady: function () {
         {// set layer
-            this.setLayerController([]);
         }
         
         return;
@@ -91,6 +90,10 @@ cc.Class({
         return;
     },
 
+    onCanOpen: function (open_flg) {
+        return (true);
+    },
+
     onCompleteOpen: function () {
         return;
     },
@@ -99,7 +102,7 @@ cc.Class({
         return;
     },
 
-    canOpen: function (open_flg) {
+    onCanFocus: function (focus_flg) {
         return (true);
     },
 
@@ -107,10 +110,6 @@ cc.Class({
         this._super(param);
 
         return;
-    },
-
-    canFocus: function (focus_flg) {
-        return (true);
     },
 
     isControl: function () {

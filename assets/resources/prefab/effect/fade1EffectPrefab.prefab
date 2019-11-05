@@ -97,7 +97,7 @@
       "__id__": 1
     },
     "_enabled": true,
-    "layerScrollViewEx": null,
+    "parentLayerScrollViewEx": null,
     "parentNode": null,
     "masterData": null,
     "autoDeleteFlag": false,

@@ -12,6 +12,10 @@ cc.Class({
     },
 
     create: function (desc) {
+        if (this.canvas != null) {
+            return (-1);
+        }
+
         this.setMasterID(desc.masterID);
 
         this.action = (desc.action == null) ? new NodeAction() : desc.action;
@@ -37,7 +41,7 @@ cc.Class({
     },
 
     update: function (time) {
-        if (!this.canUpdate()) {
+        if (this.canvas == null) {
             return;
         }
 

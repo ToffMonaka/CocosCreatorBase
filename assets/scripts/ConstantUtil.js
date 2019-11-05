@@ -92,11 +92,6 @@ var CANVAS_PREFAB = {
 Object.freeze(CANVAS_PREFAB);
 
 var CANVAS_LAYER = {
-    LAYER_INDEX: cc.Enum({
-        TERMINAL: 0,
-        LOG: 1,
-        TITLE: 2
-    }),
     OPEN_TYPE: cc.Enum({
         NONE: 0,
         WORK1: 1
@@ -105,8 +100,6 @@ var CANVAS_LAYER = {
 Object.freeze(CANVAS_LAYER);
 
 var TERMINAL_LAYER = {
-    LAYER_INDEX: cc.Enum({
-    }),
     OPEN_TYPE: cc.Enum({
         NONE: 0,
         WORK1: 1
@@ -115,8 +108,6 @@ var TERMINAL_LAYER = {
 Object.freeze(TERMINAL_LAYER);
 
 var LOG_LAYER = {
-    LAYER_INDEX: cc.Enum({
-    }),
     OPEN_TYPE: cc.Enum({
         NONE: 0,
         WORK1: 1
@@ -125,8 +116,6 @@ var LOG_LAYER = {
 Object.freeze(LOG_LAYER);
 
 var TITLE_LAYER = {
-    LAYER_INDEX: cc.Enum({
-    }),
     OPEN_TYPE: cc.Enum({
         NONE: 0,
         WORK1: 1,

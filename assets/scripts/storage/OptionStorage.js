@@ -108,7 +108,7 @@ OptionStorage.prototype.loadData = function () {
 
             switch (a_split3_str_ary[0]) {
             case '0': {
-                dat.setSoundBGMMuteFlag((a_split3_str_ary[1] == '0') ? false : true);
+                dat.setSoundBGMMuteFlag(a_split3_str_ary[1] == '1');
                 
                 break;
             }
@@ -118,7 +118,7 @@ OptionStorage.prototype.loadData = function () {
                 break;
             }
             case '2': {
-                dat.setSoundSEMuteFlag((a_split3_str_ary[1] == '0') ? false : true);
+                dat.setSoundSEMuteFlag(a_split3_str_ary[1] == '1');
 
                 break;
             }
@@ -128,7 +128,7 @@ OptionStorage.prototype.loadData = function () {
                 break;
             }
             case '4': {
-                dat.setStageLifeGameFlag((a_split3_str_ary[1] == '0') ? false : true);
+                dat.setStageLifeGameFlag(a_split3_str_ary[1] == '1');
 
                 break;
             }

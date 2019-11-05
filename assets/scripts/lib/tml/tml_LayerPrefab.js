@@ -3,8 +3,8 @@ cc.Class({
 
     properties: {
         canvas: {default: null, serializable: false, visible: false},
-        layer: {default: null, serializable: false, visible: false},
-        layerScrollViewEx: {default: null, visible: false}
+        parentLayer: {default: null, serializable: false, visible: false},
+        parentLayerScrollViewEx: {default: null, visible: false}
     },
 
     onLoad: function () {
@@ -36,13 +36,19 @@ cc.Class({
     },
     
     create: function (desc) {
-        this.canvas = (desc.canvas === undefined) ? desc.layer.canvas : desc.canvas;
-        this.layer = (desc.layer === undefined) ? null : desc.layer;
-        this.layerScrollViewEx = (desc.layerScrollViewEx === undefined) ? null : desc.layerScrollViewEx;
+        if (this.canvas != null) {
+            return (-1);
+        }
+
+        this.canvas = (desc.canvas === undefined) ? desc.parentLayer.canvas : desc.canvas;
+        this.parentLayer = (desc.parentLayer === undefined) ? null : desc.parentLayer;
+        this.parentLayerScrollViewEx = (desc.parentLayerScrollViewEx === undefined) ? null : desc.parentLayerScrollViewEx;
 
         let create_res = this.onCreate(desc);
 
         if (create_res < 0) {
+            this.canvas = null;
+
             return (create_res);
         }
 
@@ -58,7 +64,7 @@ cc.Class({
     },
     
     update: function (time) {
-        if (!this.canUpdate()) {
+        if (this.canvas == null) {
             return;
         }
 
@@ -67,19 +73,15 @@ cc.Class({
         return;
     },
 
-    canUpdate: function () {
-        return (this.canvas != null);
-    },
-
     isControl: function () {
-        if (this.layer != null) {
-            if (!this.layer.isControl()) {
+        if (this.parentLayer != null) {
+            if (!this.parentLayer.isControl()) {
                 return (false);
             }
         }
 
-        if (this.layerScrollViewEx != null) {
-            if (!this.layerScrollViewEx.isControl()) {
+        if (this.parentLayerScrollViewEx != null) {
+            if (!this.parentLayerScrollViewEx.isControl()) {
                 return (false);
             }
         }

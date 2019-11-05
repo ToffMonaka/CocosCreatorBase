@@ -12,6 +12,10 @@ cc.Class({
     },
 
     create: function (desc) {
+        if (this.canvas != null) {
+            return (-1);
+        }
+
         this.setMasterID(desc.masterID);
 
         this.animationState = this.animation.getAnimationState(this.animation.getClips()[0].name);
@@ -33,7 +37,7 @@ cc.Class({
     },
 
     update: function (time) {
-        if (!this.canUpdate()) {
+        if (this.canvas == null) {
             return;
         }
 

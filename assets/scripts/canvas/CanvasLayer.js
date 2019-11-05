@@ -19,12 +19,6 @@ cc.Class({
             this.terminalLayer = this.terminalLayerNode.getComponent('TerminalLayer');
             this.logLayer = this.logLayerNode.getComponent('LogLayer');
             this.titleLayer = this.titleLayerNode.getComponent('TitleLayer');
-
-            this.setLayerController([
-                this.terminalLayer,
-                this.logLayer,
-                this.titleLayer
-            ]);
         }
 
         return;
@@ -32,13 +26,13 @@ cc.Class({
 
     onCreate: function (desc) {
         {// create layer
-            this.terminalLayer.create({layer: this, openAutoFlag: true});
+            this.terminalLayer.create({parentLayer: this, openAutoFlag: true});
             this.terminalLayer.setOpenParameter({openType: ConstantUtil.TERMINAL_LAYER.OPEN_TYPE.WORK1});
             
-            this.logLayer.create({layer: this, openAutoFlag: true, messageLimit: 30});
+            this.logLayer.create({parentLayer: this, openAutoFlag: true, messageLimit: 30});
             this.logLayer.setOpenParameter({openType: ConstantUtil.LOG_LAYER.OPEN_TYPE.WORK1});
 
-            this.titleLayer.create({layer: this, openAutoFlag: false});
+            this.titleLayer.create({parentLayer: this, openAutoFlag: false});
             this.titleLayer.setOpenParameter({openType: ConstantUtil.TITLE_LAYER.OPEN_TYPE.WORK1});
         }
 
@@ -82,6 +76,10 @@ cc.Class({
         return;
     },
 
+    onCanOpen: function (open_flg) {
+        return (true);
+    },
+
     onCompleteOpen: function () {
         return;
     },
@@ -90,7 +88,7 @@ cc.Class({
         return;
     },
 
-    canOpen: function (open_flg) {
+    onCanFocus: function (focus_flg) {
         return (true);
     },
 
@@ -98,10 +96,6 @@ cc.Class({
         this._super(param);
 
         return;
-    },
-
-    canFocus: function (focus_flg) {
-        return (true);
     },
 
     isControl: function () {
