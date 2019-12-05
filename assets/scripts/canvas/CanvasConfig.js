@@ -54,12 +54,12 @@ CanvasConfig.prototype.loadData = function () {
         
         if ((a_str === null)
         || (a_str.length <= 0)) {
-            cc.log('CanvasConfig.load: data=Empty');
+            cc.log('CanvasConfig.loadData: data=Empty');
 
             break;
         }
 
-        cc.log('CanvasConfig.load: data=' + a_str);
+        cc.log('CanvasConfig.loadData: data=' + a_str);
 
         let dat = this.data;
 
